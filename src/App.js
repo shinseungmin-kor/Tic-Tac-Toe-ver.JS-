@@ -3,7 +3,7 @@ import Board from './Board';
 import './App.css';
 
 const App = () => {
-  
+  const [history, setHistory] = useState(Array(9).fill(null))
 
     return(
         <>
