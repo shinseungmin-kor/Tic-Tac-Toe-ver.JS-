@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+.status {
+  margin-bottom: 10px;
+}
+
+.game-info {
+  margin-left: 20px;
+}

@@ -3,17 +3,71 @@ import Board from './Board';
 import './App.css';
 
 const App = () => {
-  const [square, setSquare] = useState(Array(9).fill(null));
+  const [history, setHistory] = useState([{
+    squares: Array(9).fill(null),
+}]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
 
   const handleClick = (n) => {
-    const sliceSq = square.slice();
-    if(calculateWinner(square) || square[n]) return;
-    sliceSq[n] = xIsNext ? "X" : "O"
-    setSquare(sliceSq)
+    const newHistory = history.slice(0, stepNumber + 1);
+    const current = newHistory[newHistory.length - 1];
+    const squares = current.squares.slice();
+
+    if(calculateWinner(squares) || squares[n]) return;
+    squares[n] = xIsNext ? "X" : "O"
+
+    setHistory(newHistory.concat([{squares: squares,}]));
+    setStepNumber(newHistory.length);
     setXIsNext(!xIsNext)
 };
+
+const jumpTo = (step) => {
+  setStepNumber(step);
+  setXIsNext((step % 2) === 0);
+};
+
+const current = history[stepNumber];
+const winner = calculateWinner(current.squares);
+
+const moves = history.map((step, move) => {
+  const desc = move ?
+      'Go to move #' + move :
+      'Go to game start';
+  return (
+      <li key={move}>
+          <button onClick={() => jumpTo(move)}>{desc}</button>
+      </li>
+  )
+})
+
+
+let status;
+if (winner) {
+    status = 'Winner: ' + winner;
+} else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+}
+
+
+    return(
+        <>
+          <div className='App'>
+          <h2>Tic - Tac - Toe</h2>
+          <div className='status'>{status}</div>
+            <Board 
+              square={current.squares}
+              handleClick={handleClick}
+            />
+            </div>
+            <div className="game-info">
+                <div>{status}</div>
+                <ol>{moves}</ol>
+            </div>
+        </>
+    )
+    
+}
 
 const calculateWinner = (squares) => {
   const lines = [
@@ -35,15 +89,7 @@ const calculateWinner = (squares) => {
   return null;
 };
 
-    return(
-        <>
-          <div className='App'>
-          <h2>Tic - Tac - Toe</h2>
-            <Board />
-            </div>
-        </>
-    )
-    
-}
-
 export default App
+
+
+// Advenced : 게임을 진행하고 history 가 쌓였을때, 클릭하면 history 가 자동으로 1번부터 재생되는 버튼을 만들어라. 

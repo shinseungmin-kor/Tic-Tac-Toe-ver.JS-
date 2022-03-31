@@ -3,10 +3,7 @@ import Button from './Button';
 
 import './Board.css'
 
-const Board = () => {
-    
-
-    
+const Board = ({ square, handleClick }) => {
 
     const renderSquare = (n) => {
         return (
@@ -19,19 +16,8 @@ const Board = () => {
         )
     };
 
-    
-
-    const winner = calculateWinner(square);
-    let status;
-    if (winner) {
-        status = 'Winner: ' + winner;
-    } else {
-        status = 'Next player: ' + (xIsNext ? 'X' : 'O');
-    }
-
     return (
         <div>
-            <div className='status'>{status}</div>
             <div className="board-row">
                 {renderSquare(0)}
                 {renderSquare(1)}
