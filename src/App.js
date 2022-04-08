@@ -28,11 +28,13 @@ const App = () => {
 };
 
 const jumpTo = (step) => {                                   // jumpTo 함수는 step 이란 인자를 받는다.
+  console.log(step)
   setStepNumber(step);                                       // 이 함수는 전달받은 인자로 stepNumber를 변화시킨다. 그렇다면 Number 타입이라는 유추가 가능하다.
   setXIsNext((step % 2) === 0);                              // xIsNext 의 상태를 시간이동의 순서에 따라 변환시켜야 한다. 클릭한 step을 2로 나누어 0과 1만으로 값을 만든 후 0과 동일한지 아닌지를 boolean 으로 받는다.
 };
 
 const current = history[stepNumber];                         // history의 stepNumber 번째 인덱스를 가져오는 변수, 위의 current 와는 다르다.
+console.log(typeof(current))
 const winner = calculateWinner(current.squares);             // 승자를 표시하는 변수, calculateWinner 함수에 current.squares 를 인자로 주었을때 생기는 결과값을 반환한다.
 console.log(winner)
 
@@ -87,6 +89,7 @@ if (winner) {                                                 // 만약 승자�
 }
 
 const calculateWinner = (squares) => {      // 승자를 정하는 함수.
+  // console.log(squares)
   const lines = [                           // 승리가 정해지는 경우를 가지고 있는 배열
       [0, 1, 2],
       [3, 4, 5],
